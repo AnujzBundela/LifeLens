@@ -1019,46 +1019,38 @@ function initMobileNavToggle() {
   });
 </script>
 
- <script>
-  const form = document.getElementById('contactForm');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const data = {
-      name: document.getElementById('Name').value,
-      phone: document.getElementById('PhoneNo').value,
-      email: document.getElementById('validateEmail').value,
-      city: document.getElementById('validationCity').value,
-      project: document.getElementById('validateProject').value,
-      timing: document.getElementById('validationTiming').value,
-      details: document.getElementById('validateTextarea').value
-    };
-
-    try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbyYGfhYx7m3WO1uzMWD_U_VrtJmTainl3m9jZa9toKNLQYAGvASKWhwa4gElgqR1omW/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      if (result.status === 'success') {
-        alert("Form submitted successfully!");
-        form.reset();
-      } else {
-        alert("Failed to submit: " + result.message);
-      }
-    } catch (error) {
-      alert("Error submitting form: " + error.message);
-    }
-  });
-</script>
-
-
  
-    
+    <script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById('Name').value,
+    phone: document.getElementById('PhoneNo').value,
+    email: document.getElementById('validateEmail').value,
+    city: document.getElementById('validationCity').value,
+    project: document.getElementById('validateProject').value,
+    time: document.getElementById('validationTiming').value,
+    details: document.getElementById('validateTextarea').value
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbxs8RJOEBOSOEDb6GQRm0J0bRaxPvSkvsZQcqqL_k5BpbTqTwVvvStrmQk7tdIEspTU_w/exec', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.json())
+  .then(response => {
+    if (response.result === 'success') {
+      alert('Form submitted successfully!');
+      document.getElementById('contactForm').reset();
+    } else {
+      alert('Submission failed.');
+    }
+  })
+  .catch(error => alert('Error: ' + error));
+});
+</script>
 
     <script defer src="js/script.js"></script>
   </body>
